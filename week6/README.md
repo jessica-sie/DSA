@@ -4,7 +4,7 @@ converting infix to postfix notation with recursion and iteration
 ##### Base Case 
 stops the recrusion 
  => when increment is equal to the length of the infix notation - 1
- OR 
+ AKA 
  if current character we are 'looking' at is at the end of the string 
 
 ##### General Case 
