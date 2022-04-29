@@ -1,4 +1,4 @@
-// converting infix expression to postfix
+// converting infix expression to postfix iterative method
 #include <iostream>
 #include <string>
 #include <stack> // C++ built in stack operations

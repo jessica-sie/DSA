@@ -9,6 +9,7 @@ stops the recrusion
 
 ##### General Case 
 get to the base case
+<<<<<<< HEAD
 => since the recursive function does not need to return any value, this recursion does not have a general case
 
 only a set of algorithm runs for each character in the infix notation
@@ -17,3 +18,6 @@ only a set of algorithm runs for each character in the infix notation
 
 jessica sie 2502053653
 
+=======
+=> since the recursive function does not need to return any value, this recursion does not have a general case only a set of algorithm runs for each character in the infix notation
+>>>>>>> e17b01126bc37b419468333448482b56d7d8a9a4
