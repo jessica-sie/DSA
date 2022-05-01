@@ -16,9 +16,9 @@ template <typename T>
 class Queue{
     private:
     // PROPERTIES
-    std::array < T,MAX> items;// pointer to array
-    int size; // number of elements in queue 
-    int i;// index of the queueFront
+    std::array<T,MAX> items;// pointer to array
+    int end; // index of queueEnd
+    int i;// index of the queueFront 
 
     // alternative properties
     // int queueFront;
@@ -26,13 +26,18 @@ class Queue{
 
     public:
     // OPERATIONS 
-    Queue():items(), size(0), i(0) {}; // constructor
+    Queue():items(), end(0), i(0) {}; // constructor
     void enqueue(T item);
     T dequeue();
     void print();
     void sort();
 
     int binarySearch(T item, int i, int arrSize); // binary search the array, returns index of desired element
+
+    // merge sort functions - divide and conquer 
+    void mergeSort(T *QArr, int start, int end);//divide 
+    void merge(T *QArr, int start, int mid,int end); // conquer 
+
 
     // getter and setter functions
     int getSize();
@@ -42,7 +47,7 @@ class Queue{
 // IMPLEMENTATIONS
 template <typename T>
 int Queue<T>::getSize(){
-    return this->size;
+    return this->end;
 }
 
 template <typename T>
@@ -52,50 +57,124 @@ int Queue<T>::getI(){
 
 template <typename T>
 void Queue<T>::enqueue(T item){
-    this->items[this->size] = item;
-    this->size++;
+    this->items[this->end] = item;
+    this->end++;
     
-    if(this->size>1){
-        this->sort();
+    if(this->end>1){
+        this->mergeSort(this->items,this->i,this->end);
     }
 
 }
 
 template <typename T>
 T Queue<T>::dequeue(){
-    this->size--;
-    return this->items[this->i++];
+    // ERROR HANDLE if queue is empty
+    if(i == end){
+        std::cout << "queue is empty"<<std::endl;
+    }
+    else{
+        return this->items[this->i++]; // increment front pointer   
+    }
 }
 
+// TO DO: implement merge sort
+// REFERENCE TO :https://www.interviewbit.com/tutorial/merge-sort-algorithm/ 
+
+
+
+// TO DO: fix error to handle passing array into a function
+template <typename T>
+void Queue<T>::merge(T *QArr,int start, int mid, int end){
+    // create auxillary array, to store sorted values?
+    int temp[end-start+1];
+
+    // declaring iterator vaiables 
+    int i = start;
+    int j = mid +1; 
+    int k= 0;//k -> the index of the newly sorted arr
+
+    // traversing both sub arrays
+    while (i <= mid && j <= end){
+        // add smaller element into aux array
+        if(QArr[i]<QArr[j]){
+            temp[k] = QArr[i];
+            k++;
+            i++;
+        }
+        else{
+            temp[k] = QArr[j];
+            j++;
+            k++;
+        }
+    }
+
+    // adding remaining elements 
+    while(i<=mid){
+        temp[k] = QArr[i];
+        k++;
+        i++;
+    }
+    while (j<= end){
+        temp[k] = QArr[j];
+        j++;
+        k++;
+    }
+
+    //copy sorted array to original interval 
+    for(i = start;i <=end;i++){
+        QArr[i] = temp[i-start];
+    }
+}
+
+//TO DO: implement mergeSort function - done
+template <typename T>
+void Queue<T>::mergeSort(T *QArr, int start, int end){
+    // if multiple elements in aux array - keep dividing array
+    if (start < end ){
+        int mid = (start+end)/2;
+        // left half 
+        this->mergeSort(QArr,start,mid);
+
+        //right half
+        this->mergeSort(QArr, mid+1, end);
+
+        this->merge(QArr,start,mid,end);
+    }
+}
+
+
+// TO DO: ensure it prints ALL elements currently in queue -> done
 template <typename T>
 void Queue<T>::print(){
-    std::cout << "SIZE OF QUEUE: " << this->size << std::endl;
-    int idx = 0;
-    for (int x = this->i; x < this->size; x++)
+    std::cout << "SIZE OF QUEUE: " << this->end << std::endl;
+    // printing the index
+    int idx = 0; 
+    for (int x = this->i; x < this->end; x++)
     {
         std::cout << idx++ << ": " << this->items[x] << std::endl;
     }
 }
 
+// bubble sort
 template <typename T>
 void Queue<T>::sort(){
     T temp;
     // bubble sort 
-    for(this->i; i<this->size; this->i++){
-        for (int j = this->i+1; j <this->size; j++){
-            if (this->items[this->i]>this->items[j]){
+    for(int x = this->i; x<this->end; x++){ // x is a temp variable to traverse throughout the array 
+        for (int y = x+1; y <this->end; y++){
+            if (this->items[x]>this->items[y]){
                 //swap
-                temp = this->items[this->i];
-                this->items[this->i] = this->items[j];
-                this->items[j] = temp;
+                temp = this->items[x];
+                this->items[x] = this->items[y];
+                this->items[y] = temp;
 
             }
         }
     }
-    this-> i = 0;
+    
 }
 
-// TO DO: BINARY SEARCH ALGORITHM
+// TO DO: BINARY SEARCH ALGORITHM -> done 
 template <typename T>
 // (item, low,high)
 int Queue<T>::binarySearch(T item, int low, int high){ // low =queueFront = 0, high = max size 
@@ -137,7 +216,12 @@ int main(){
     myQueue.enqueue(6);
 
     myQueue.print();
-    // std:: cout<< myQueue.dequeue()<<std::endl;
+    std:: cout<< myQueue.dequeue()<<std::endl;
+    myQueue.print();
+
+    myQueue.enqueue(12); // enqueing a new element doesnt work 
+
+    myQueue.print();
  
 
     std::cout<<myQueue.binarySearch(22,0,myQueue.getSize())<<std::endl;
