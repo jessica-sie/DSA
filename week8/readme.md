@@ -12,12 +12,13 @@ Linear sata structures, sorting, and searching algorithms review
 ### Program 
 * Linear Data Structure : Queue with array implementation 
 * Sorting algorithm: merge sort 
-    * time complexity: O(N log(N))
+    * **time complexity**: O(N log(N))
     * number of levels ->log(N) base 2 
     * nuber of operations performed on each level -> N 
     * product = N log(N)
 
-    * space complexity : O(n)
+    * **space complexity** : O(n)
+    * auxilliary array needed to store elements in sorted order
 
 ### Personal
 * Name: Jessica Sie 
