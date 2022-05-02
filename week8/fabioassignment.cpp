@@ -20,10 +20,6 @@ class Queue{
     int end; // index of queueEnd
     int i;// index of the queueFront 
 
-    // alternative properties
-    // int queueFront;
-    // int queueEnd;
-
     public:
     // OPERATIONS 
     Queue():items(), end(0), i(0) {}; // constructor
@@ -35,8 +31,10 @@ class Queue{
     int binarySearch(T item, int i, int arrSize); // binary search the array, returns index of desired element
 
     // merge sort functions - divide and conquer 
-    void mergeSort(T *QArr, int start, int end);//divide 
-    void merge(T *QArr, int start, int mid,int end); // conquer 
+    // template<std::size_t SIZE> 
+    void mergeSort(std::array<T,MAX> &QArr, int start, int end);//divide
+    // template<std::size_t SIZE>  
+    void merge(std::array<T,MAX> &QArr, int start, int mid,int end); // conquer 
 
 
     // getter and setter functions
@@ -59,9 +57,14 @@ template <typename T>
 void Queue<T>::enqueue(T item){
     this->items[this->end] = item;
     this->end++;
+   
+    std::cout<<"added "<< item<<std::endl;
     
     if(this->end>1){
-        this->mergeSort(this->items,this->i,this->end);
+        this->mergeSort(this->items,this->i,this->end-1); 
+        
+        std::cout<<"sorted to array "<< item<<std::endl;
+
     }
 
 }
@@ -79,18 +82,31 @@ T Queue<T>::dequeue(){
 
 // TO DO: implement merge sort
 // REFERENCE TO :https://www.interviewbit.com/tutorial/merge-sort-algorithm/ 
-
-
-
-// TO DO: fix error to handle passing array into a function
+// TO DO: fix error to handle passing array into a function - done 
+// TO DO : ensure the printed queue is correct ie. not {0,0,0,0,0,2}
 template <typename T>
-void Queue<T>::merge(T *QArr,int start, int mid, int end){
+// template <std::size_t SIZE>
+void Queue<T>::merge(std::array<T,MAX> &QArr,int start, int mid, int end){ // passing reference(alias) of array to function 
+    /*How do I pass a std::array as a reference parameter to avoid copying the entire array?
+    use &????
+    */
+
+   // mental notes 
+    // end => the index of the last element (not after)
+    // this->end => index of element after the last 
+
+    // ERROR FOUND 
+    // changed this->mergesort(&arr, start, end ) 
+    // to this->mergeSort(this->items, this->start, this->end -1 )
+    //why ?
+    // mergesort(&arr, start, end -1)-> to make argument refer to the last element instead of the index after the last lement 
+    
     // create auxillary array, to store sorted values?
-    int temp[end-start+1];
+    T temp[end-start+1];
 
     // declaring iterator vaiables 
-    int i = start;
-    int j = mid +1; 
+    int i = start; // first indx of left half of array
+    int j = mid +1; // 1st  indx of right half of array
     int k= 0;//k -> the index of the newly sorted arr
 
     // traversing both sub arrays
@@ -128,7 +144,8 @@ void Queue<T>::merge(T *QArr,int start, int mid, int end){
 
 //TO DO: implement mergeSort function - done
 template <typename T>
-void Queue<T>::mergeSort(T *QArr, int start, int end){
+// template<std::size_t SIZE> 
+void Queue<T>::mergeSort(std::array<T,MAX> &QArr, int start, int end){
     // if multiple elements in aux array - keep dividing array
     if (start < end ){
         int mid = (start+end)/2;
