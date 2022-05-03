@@ -223,26 +223,85 @@ int Queue<T>::binarySearch(T item, int low, int high){ // low =queueFront = 0, h
 
 
 int main(){
+    int x;
+    int element;
+    
+    std::cout<< "~~ MENU ~~"<<std::endl;
+    std::cout<< "1. Enqueue" <<std::endl;
+    std::cout<< "2. Dequeue" <<std::endl;
+    std::cout<< "3. Display queue" <<std::endl;
+    std::cout<< "4. Search queue (binary)" <<std::endl;
+    std::cout<< "5. Quit" <<std::endl;
+
+    // making queue object 
     Queue<int> myQueue;
-    myQueue.enqueue(10);
-    myQueue.enqueue(11);
-    myQueue.enqueue(2);
-    myQueue.enqueue(4);
-    myQueue.enqueue(9);
-    myQueue.enqueue(100);
-    myQueue.enqueue(6);
 
-    myQueue.print();
-    std:: cout<< myQueue.dequeue()<<std::endl;
-    myQueue.print();
+    // accepting user inputs 
+    while (x!=5){
+        std::cout<<"option: ";
+        std::cin>>x;
+        
+        switch (x){
+            case 1: {// enqueue
+                
+                std::cout<<"element to add: ";
+                std::cin>>element;
+                myQueue.enqueue(element);
+                break;
+            }
 
-    myQueue.enqueue(12); // enqueing a new element doesnt work 
+            case 2: { // dequeue
+                std::cout<<"removed "<< myQueue.dequeue()<< std::endl;
+                break;
+            }
 
-    myQueue.print();
+            case 3:{ //print
+                myQueue.print();
+                break;
+            }
+
+            case 4:{//search
+                std::cout<<"element to search: ";
+                std::cin>> element;
+                std::cout<<"found at array index: "<<myQueue.binarySearch(element, myQueue.getI(),myQueue.getSize())<<std::endl;
+                break;
+            }
+            case 5:{
+                break;
+            }
+            
+            default:{
+                std::cout<<"invalid choice"<<std::endl;
+                break;
+            }
+            
+            
+
+        }
+
+    }
+
+    
+    // myQueue.enqueue(10);
+    // myQueue.enqueue(11);
+    // myQueue.enqueue(2);
+    // myQueue.enqueue(4);
+    // myQueue.enqueue(9);
+    // myQueue.enqueue(100);
+    // myQueue.enqueue(6);
+
+    // myQueue.print();
+    // std:: cout<< myQueue.dequeue()<<std::endl;
+    // myQueue.print();
+
+    // myQueue.enqueue(12); // enqueing a new element doesnt work 
+
+    // myQueue.print();
  
 
-    std::cout<<myQueue.binarySearch(22,0,myQueue.getSize())<<std::endl;
-    std::cout<<"found at array index: "<<myQueue.binarySearch(100,myQueue.getI(),myQueue.getSize())<<std::endl;
+    // std::cout<<myQueue.binarySearch(22,0,myQueue.getSize())<<std::endl;
+    // std::cout<<"found at array index: "<<myQueue.binarySearch(100,myQueue.getI(),myQueue.getSize())<<std::endl;
     
 
 }
+

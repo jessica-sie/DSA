@@ -20,6 +20,10 @@ Linear sata structures, sorting, and searching algorithms review
     * **space complexity** : O(n)
         * auxilliary array needed to store elements in sorted order
 
+### References
+* mergesort algorithm 
+https://www.interviewbit.com/tutorial/merge-sort-algorithm/
+
 ### Personal
 * Name: Jessica Sie 
 * ID: 2502053653
